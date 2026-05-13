@@ -1,0 +1,33 @@
+.react-flow__node-default,
+.react-flow__node-input,
+.react-flow__node-output  {
+  background: #eee;
+  border-color: #333;
+  color: black;
+  width: 120px;
+  border: 2px solid white;
+  border-radius: 8px;
+  background: white;
+  padding: 10px;
+}
+
+ /* Couleur du texte du label */
+/* .react-flow__edge-text {
+  fill: #dbdbdb !important;
+  font-weight: bold;
+} */
+
+/* Fond du label */
+/* .react-flow__edge-textbg {
+  fill: #1d2226 !important;
+  fill-opacity: 1 !important;
+} */
+
+@keyframes dashdraw {
+  from {
+    stroke-dashoffset: 10;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}

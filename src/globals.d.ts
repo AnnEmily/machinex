@@ -1,8 +1,9 @@
-// Needed for non-typescript files
-declare module '*.css' {
-  const content: Record<string, string>;
-  export default content;
-}
+// Needed to import non-typescript files
+// declare module '*.css' {
+//   const content: Record<string, string>;
+//   export default content;
+// }
+declare module '*.css';
 
 declare module "*.svg" {
   import React = require('react');
