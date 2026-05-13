@@ -1,6 +1,6 @@
-# machinex
+# Machinex
 
-Prototype
+Prototype d'asservissement de machines.
 
 ## Live demo
 
