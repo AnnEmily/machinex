@@ -1,11 +1,7 @@
-export const Status = {
-  ONLINE: 'online',
-  IDLE: 'idle',
-  STOPPED: 'stopped',
-} as const;
+import { MachineStatus } from "./types";
 
-export const STATUS_COLORS = {
-  [Status.ONLINE]: '#22c55e',
-  [Status.IDLE]: '#f97316',
-  [Status.STOPPED]: '#ef4444',
+export const statusColor: Record<MachineStatus, string> = {
+  ONLINE: '#20ac53',
+  IDLE: '#f97316',
+  STOPPED: '#ef4444',
 };

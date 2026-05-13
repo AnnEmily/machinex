@@ -1,7 +1,8 @@
 import { FC } from 'react';
 import { Handle, Position, type NodeProps, type Node } from '@xyflow/react';
+
 import { MachineNodeData, MachineStatus } from '../../shared/types';
-import { Status } from '../../shared/constants';
+import { statusColor } from '../../shared/constants';
 
 type MachineNodeRef = Node<MachineNodeData, 'machine'>;
 
@@ -22,11 +23,7 @@ const handleStyle = {
 };
 
 export const MachineNode: FC<NodeProps<MachineNodeRef>> = ({ data }) => {
-  const borderColor = {
-    [Status.ONLINE]: '#20ac53',
-    [Status.IDLE]: '#f97316',
-    [Status.STOPPED]: '#ef4444',
-  }[data.status as MachineStatus] || '#ccc';
+  const borderColor = statusColor[data.status as MachineStatus] || '#ccc';
 
   const needsInput = data.connectors === 'in' || data.connectors === 'both';
   const needsOutput = data.connectors === 'out' || data.connectors === 'both';

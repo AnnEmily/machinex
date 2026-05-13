@@ -9,6 +9,8 @@ Prototype d'asservissement de machines.
 ## Tools used
 
 - Framework: React
+- Components: none. Plain Vanilla JS.
+- Graph: React Flow
 - Bundler: Vite
 - Linter: Eslint
 

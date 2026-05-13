@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { BaseEdge, EdgeProps, getBezierPath, EdgeLabelRenderer, useNodes } from '@xyflow/react';
-import { Status } from '../../shared/constants';
+
+import { MachineNode } from '../../shared/types';
 
 export const StatusEdge: FC<EdgeProps> = ({
   id,
@@ -24,11 +25,11 @@ export const StatusEdge: FC<EdgeProps> = ({
   });
 
   // Retrieve node list and find the node feeding the edge
-  const nodes = useNodes();
+  const nodes = useNodes<MachineNode>();
   const sourceNode = nodes.find((node) => node.id === source);
 
-  // If status of feeding node is ONLINE, enable animation
-  const isAnimated = sourceNode?.data?.status === Status.ONLINE;
+  // If status of feeding node is ONLINE, enable animated edge
+  const isAnimated = sourceNode?.data?.status === 'ONLINE';
   const edgeColor = isAnimated ? '#22c55e' : '#b1b1b7';
   const customMarkerId = `arrow-marker-${id}`;
 
@@ -41,7 +42,7 @@ export const StatusEdge: FC<EdgeProps> = ({
             id={customMarkerId}
             markerWidth="10"
             markerHeight="12"
-            refX="9" /* distance to node */
+            refX="9" /* distance from tip to node border */
             refY="6"
             orient="auto-start-reverse"
             markerUnits="strokeWidth"

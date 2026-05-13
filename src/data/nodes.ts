@@ -1,17 +1,16 @@
-import { Status } from "../shared/constants";
-import { MachineStatus, Connectors } from "../shared/types";
+import { MachineNode } from "../shared/types";
 
 const offsetX = 0;
 const offsetY = 0;
 
-export const initialNodes = [
+export const initialNodes: MachineNode[] = [
   {
     id: 'n1',
     type: 'machine',
     data: {
       label: 'Conveyor A',
-      status: Status.ONLINE as MachineStatus,
-      connectors: 'out' as Connectors,
+      status: 'ONLINE',
+      connectors: 'out',
      },
     position: { x: 0 + offsetX, y: 0 + offsetY },
   },
@@ -20,8 +19,8 @@ export const initialNodes = [
     type: 'machine',
     data: {
       label: 'Sorter S',
-      status: Status.STOPPED as MachineStatus,
-      connectors: 'both' as Connectors,
+      status: 'STOPPED',
+      connectors: 'both',
     },
     position: { x: 200 + offsetX, y: 0 + offsetY },
   },
@@ -30,8 +29,8 @@ export const initialNodes = [
     type: 'machine',
     data: {
       label: 'Conveyor B1',
-      status: Status.STOPPED as MachineStatus,
-      connectors: 'both' as Connectors,
+      status: 'STOPPED',
+      connectors: 'both',
     },
     position: { x: 400 + offsetX, y: -50 + offsetY },
   },
@@ -40,8 +39,8 @@ export const initialNodes = [
     type: 'machine',
     data: {
       label: 'Conveyor B2',
-      status: Status.STOPPED as MachineStatus,
-      connectors: 'both' as Connectors,
+      status: 'STOPPED',
+      connectors: 'both',
     },
     position: { x: 400 + offsetX, y: 50 + offsetY },
   },
@@ -50,8 +49,8 @@ export const initialNodes = [
     type: 'machine',
     data: {
       label: 'Shredder S',
-      status: Status.STOPPED as MachineStatus,
-      connectors: 'in' as Connectors,
+      status: 'STOPPED',
+      connectors: 'in',
     },
     position: { x: 600 + offsetX, y: -50 + offsetY },
   },
@@ -60,8 +59,8 @@ export const initialNodes = [
     type: 'machine',
     data: {
       label: 'Compactor C',
-      status: Status.STOPPED as MachineStatus,
-      connectors: 'in' as Connectors,
+      status: 'STOPPED',
+      connectors: 'in',
     },
     position: { x: 600 + offsetX, y: 50 + offsetY },
   },

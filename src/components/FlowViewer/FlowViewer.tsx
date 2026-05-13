@@ -11,6 +11,7 @@ import { initialEdges } from "../../data/edges";
 import backgroundImage from '../../assets/logo.webp';
 import '@xyflow/react/dist/style.css';
 import './FlowViewer.css';
+import { MachinePanel } from "../MachinePanel";
 
 const BG_COLOR = '#00568c';
 
@@ -66,6 +67,13 @@ export const FlowViewer: FC = () => {
         return node;
       })
     );
+
+    setSelectedNode(prev => {
+      if (prev && prev.id === id) {
+        return { ...prev, data: { ...prev.data, status: newStatus } };
+      }
+      return prev;
+    });
   };
 
   const onNodeClick = useCallback((_, node) => {
@@ -116,13 +124,13 @@ export const FlowViewer: FC = () => {
       
         <div style={{ height: '500px', border: '2px solid #ccc', padding: '20px', margin: '20px' }}>
           {selectedNode && (
-            <>
-              <h3>{`Machine: ${selectedNode.data.label}`}</h3>
-              <p>{`ID: ${selectedNode.id}`}</p>
-              <p>{`Status: ${selectedNode.data.status}`}</p>
-              <button onClick={() => setSelectedNode(null)}>Close</button>
-            </>
+            <MachinePanel
+              node={selectedNode}
+              onChangeStatus={s => updateMachineStatus(selectedNode.id, s)}
+              onClose={() => setSelectedNode(null)}
+            />
           )}
+
           {!selectedNode && (
             <>
               <h3>{"Your options:"}</h3>
