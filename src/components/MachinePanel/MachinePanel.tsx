@@ -3,6 +3,7 @@ import GaugeChart from 'react-gauge-chart';
 import { type Node } from '@xyflow/react';
 
 import { MachineNodeData, MachineStatus } from '../../shared/types';
+import { trimDecimals } from '../../shared/utilsString';
 import { StatusButtonGroup } from './StatusButtonGroup';
 
 const titleStyle: CSSProperties = {
@@ -59,7 +60,7 @@ export const MachinePanel: FC<MachinePanelProps> = ({ node, onChangeStatus }) =>
       : node.data.opParam.value;
   
   const percent = value / node.data.opParam.max;
-  const gaugeString = `${node.data.opParam.name}: ${value} ${node.data.opParam.unit}`;
+  const gaugeString = `${node.data.opParam.name}: ${trimDecimals(value)} ${node.data.opParam.unit}`;
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
