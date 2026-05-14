@@ -43,6 +43,7 @@ const diagramStyle = {
   marginInline: '20px',
   border: '2px solid white',
   height: '60vh',
+  minHeight: '150px',
   background: '#1d2226',
 };
 
@@ -73,7 +74,6 @@ export const FlowViewer: FC = () => {
     );
 
     setSelectedNode(p => ({ ...p, data: { ...p.data, status: newStatus } }));
-    console.log('updateMachineStatus'); // AEG
   };
 
   const onNodeClick = useCallback((_, node: MachineNodeType) => {
@@ -89,11 +89,6 @@ export const FlowViewer: FC = () => {
     (changes) => setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
     [],
   );
-
-  console.log('nodes -------------------'); // AEG
-  console.log(nodes);
-  console.log('selectedNode ------------');
-  console.log(selectedNode);
 
   return (
     <div id="flow-viewer" style={pageStyle}>
