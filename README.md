@@ -6,6 +6,10 @@ Prototype d'asservissement de machines.
 
 [Asservissement](https://annemily.github.io/machinex/)
 
+## Screen capture
+
+![Overall screen capture](/public/capture1.png)
+
 ## Tools used
 
 - Framework: React
