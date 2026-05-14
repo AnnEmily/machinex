@@ -1,5 +1,5 @@
 import { CSSProperties, type FC, useState, useCallback } from "react";
-import { ReactFlow, applyNodeChanges, applyEdgeChanges, type Node, OnSelectionChangeParams } from '@xyflow/react';
+import { ReactFlow, applyNodeChanges, applyEdgeChanges, type Node } from '@xyflow/react';
 
 import backgroundImage from '../../assets/logo.webp';
 import { initialNodes } from "../../data/nodes";
@@ -42,9 +42,17 @@ const pageStyle: CSSProperties = {
 const diagramStyle = {
   marginInline: '20px',
   border: '2px solid white',
-  width: '96.5%',
   height: '60vh',
+  minHeight: '150px',
   background: '#1d2226',
+};
+
+const panelStyle = {
+  height: '500px',
+  border: '2px solid #ccc',
+  padding: '20px',
+  margin: '20px',
+  backgroundColor: '#1d2226',
 };
 
 const initialViewport = { x: 50, y: 150, zoom: 1.5 };
@@ -66,7 +74,6 @@ export const FlowViewer: FC = () => {
     );
 
     setSelectedNode(p => ({ ...p, data: { ...p.data, status: newStatus } }));
-    console.log('updateMachineStatus'); // AEG
   };
 
   const onNodeClick = useCallback((_, node: MachineNodeType) => {
@@ -83,11 +90,6 @@ export const FlowViewer: FC = () => {
     [],
   );
 
-  console.log('nodes -------------------'); // AEG
-  console.log(nodes);
-  console.log('selectedNode ------------');
-  console.log(selectedNode);
-
   return (
     <div id="flow-viewer" style={pageStyle}>
       <div style={logoContainerStyle}>
@@ -101,17 +103,18 @@ export const FlowViewer: FC = () => {
         <ReactFlow
           nodes={nodes}
           nodeTypes={nodeTypes}
-          edges={edges}
-          edgeTypes={edgeTypes}
           onNodesChange={onNodesChange}
           onNodeClick={onNodeClick}
+          edges={edges}
+          edgeTypes={edgeTypes}
           onEdgesChange={onEdgesChange}
+          onPaneClick={() => setSelectedNode(null)}
           defaultViewport={initialViewport}
           proOptions={{ hideAttribution: true }}
         />
       </div>
       
-      <div style={{ height: '500px', border: '2px solid #ccc', padding: '20px', margin: '20px', backgroundColor: '#1d2226' }}>
+      <div style={panelStyle}>
         {selectedNode && (
           <MachinePanel
             node={selectedNode}
@@ -122,7 +125,7 @@ export const FlowViewer: FC = () => {
         {!selectedNode && (
           <>
             <h3>{"Your options:"}</h3>
-            <div>{"- Use mouse wheel to zoom in/out the graph"}</div>
+            <div>{"- Use mouse wheel to zoom in"}</div>
             <div>{"- Pan the graph background to drag all nodes at once"}</div>
             <div>{"- Click on a node to start or stop the machine"}</div>
             <div style={{ paddingTop: 18 }}>{"On initial load, all machines are stopped."}</div>
