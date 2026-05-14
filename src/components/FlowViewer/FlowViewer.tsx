@@ -1,17 +1,17 @@
-import { CSSProperties, type FC } from "react";
-import { useState, useCallback } from 'react';
-import { ReactFlow, applyNodeChanges, applyEdgeChanges, type Node } from '@xyflow/react';
-
-import { MachineNodeData, MachineStatus } from "../../shared/types";
-import { MachineNode } from './MachineNode';
-import { StatusEdge } from "./StatusEdge";
-import { initialNodes } from "../../data/nodes";
-import { initialEdges } from "../../data/edges";
+import { CSSProperties, type FC, useState, useCallback } from "react";
+import { ReactFlow, applyNodeChanges, applyEdgeChanges, type Node, OnSelectionChangeParams } from '@xyflow/react';
 
 import backgroundImage from '../../assets/logo.webp';
+import { initialNodes } from "../../data/nodes";
+import { initialEdges } from "../../data/edges";
+import { MachineNodeType, MachineNodeData, MachineStatus } from "../../shared/types";
+
+import { MachineNode } from './MachineNode';
+import { MachinePanel } from "../MachinePanel";
+import { StatusEdge } from "./StatusEdge";
+
 import '@xyflow/react/dist/style.css';
 import './FlowViewer.css';
-import { MachinePanel } from "../MachinePanel";
 
 const BG_COLOR = '#00568c';
 
@@ -53,31 +53,23 @@ const nodeTypes = { machine: MachineNode };
 const edgeTypes = { statusEdge: StatusEdge };
 
 export const FlowViewer: FC = () => {
-  const [selectedNode, setSelectedNode] = useState<Node<MachineNodeData>>(null);
+  const [selectedNode, setSelectedNode] = useState<MachineNodeType>(null);
   const [edges, setEdges] = useState(initialEdges);
   const [nodes, setNodes] = useState<Node<MachineNodeData>[]>(initialNodes);
 
   const updateMachineStatus = (id: string, newStatus: MachineStatus) => {
-    setNodes((nds) =>
-      nds.map((node) => {
-        if (node.id === id) {
-          // Create a new node to trigger a render
-          return { ...node, data: { ...node.data, status: newStatus } };
-        }
-        return node;
-      })
+    setNodes(prevArr =>
+      prevArr.map(node => node.id === id
+        ? ({ ...node, data: { ...node.data, status: newStatus } })
+        : node
+      )
     );
 
-    setSelectedNode(prev => {
-      if (prev && prev.id === id) {
-        return { ...prev, data: { ...prev.data, status: newStatus } };
-      }
-      return prev;
-    });
+    setSelectedNode(p => ({ ...p, data: { ...p.data, status: newStatus } }));
+    console.log('updateMachineStatus'); // AEG
   };
 
-  const onNodeClick = useCallback((_, node) => {
-    console.log('Nœud cliqué:', node);
+  const onNodeClick = useCallback((_, node: MachineNodeType) => {
     setSelectedNode(node);
   }, [setSelectedNode]);
 
@@ -91,11 +83,11 @@ export const FlowViewer: FC = () => {
     [],
   );
 
-  // const onConnect = useCallback(
-  //   (params) => setEdges((edgesSnapshot) => addEdge(params, edgesSnapshot)),
-  //   [],
-  // );
- 
+  console.log('nodes -------------------'); // AEG
+  console.log(nodes);
+  console.log('selectedNode ------------');
+  console.log(selectedNode);
+
   return (
     <div id="flow-viewer" style={pageStyle}>
       <div style={logoContainerStyle}>
@@ -111,36 +103,32 @@ export const FlowViewer: FC = () => {
           nodeTypes={nodeTypes}
           edges={edges}
           edgeTypes={edgeTypes}
-          onNodeClick={onNodeClick}
           onNodesChange={onNodesChange}
+          onNodeClick={onNodeClick}
           onEdgesChange={onEdgesChange}
-          // onConnect={onConnect}
           defaultViewport={initialViewport}
           proOptions={{ hideAttribution: true }}
         />
       </div>
       
+      <div style={{ height: '500px', border: '2px solid #ccc', padding: '20px', margin: '20px', backgroundColor: '#1d2226' }}>
+        {selectedNode && (
+          <MachinePanel
+            node={selectedNode}
+            onChangeStatus={s => updateMachineStatus(selectedNode.id, s)}
+          />
+        )}
 
-      
-        <div style={{ height: '500px', border: '2px solid #ccc', padding: '20px', margin: '20px' }}>
-          {selectedNode && (
-            <MachinePanel
-              node={selectedNode}
-              onChangeStatus={s => updateMachineStatus(selectedNode.id, s)}
-              onClose={() => setSelectedNode(null)}
-            />
-          )}
-
-          {!selectedNode && (
-            <>
-              <h3>{"Your options:"}</h3>
-              <div>{"- Use mouse wheel to zoom in/out the graph"}</div>
-              <div>{"- Pan the graph background to drag all nodes at once"}</div>
-              <div>{"- Click on a node to start or stop the machine"}</div>
-              <div style={{ paddingTop: 18 }}>{"On initial load, all machines are stopped."}</div>
-            </>
-          )}
-        </div>
+        {!selectedNode && (
+          <>
+            <h3>{"Your options:"}</h3>
+            <div>{"- Use mouse wheel to zoom in/out the graph"}</div>
+            <div>{"- Pan the graph background to drag all nodes at once"}</div>
+            <div>{"- Click on a node to start or stop the machine"}</div>
+            <div style={{ paddingTop: 18 }}>{"On initial load, all machines are stopped."}</div>
+          </>
+        )}
+      </div>
     </div>
   );
 };

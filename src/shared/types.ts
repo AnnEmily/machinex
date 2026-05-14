@@ -9,4 +9,4 @@ export type MachineNodeData = {
   connectors: Connectors;
 };
 
-export type MachineNode = Node<MachineNodeData, 'machine'>;
+export type MachineNodeType = Node<MachineNodeData, 'machine'>;

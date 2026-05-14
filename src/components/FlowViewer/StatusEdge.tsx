@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { BaseEdge, EdgeProps, getBezierPath, EdgeLabelRenderer, useNodes } from '@xyflow/react';
 
-import { MachineNode } from '../../shared/types';
+import { MachineNodeType } from '../../shared/types';
 
 export const StatusEdge: FC<EdgeProps> = ({
   id,
@@ -25,7 +25,7 @@ export const StatusEdge: FC<EdgeProps> = ({
   });
 
   // Retrieve node list and find the node feeding the edge
-  const nodes = useNodes<MachineNode>();
+  const nodes = useNodes<MachineNodeType>();
   const sourceNode = nodes.find((node) => node.id === source);
 
   // If status of feeding node is ONLINE, enable animated edge

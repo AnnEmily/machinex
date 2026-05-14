@@ -1,7 +1,8 @@
 /* Override default node styles */
 .react-flow__node-default,
 .react-flow__node-input,
-.react-flow__node-output  {
+.react-flow__node-output
+{
   background: #eee;
   border-color: #333;
   color: black;
@@ -9,6 +10,7 @@
   border: 2px solid white;
   border-radius: 8px;
   background: white;
+  /* background: transparent !important; AEG */
   padding: 10px;
 }
 

@@ -1,15 +1,15 @@
-import { MachineNode } from "../shared/types";
+import { MachineNodeType } from "../shared/types";
 
 const offsetX = 0;
 const offsetY = 0;
 
-export const initialNodes: MachineNode[] = [
+export const initialNodes: MachineNodeType[] = [
   {
     id: 'n1',
     type: 'machine',
     data: {
       label: 'Conveyor A',
-      status: 'ONLINE',
+      status: 'STOPPED',
       connectors: 'out',
      },
     position: { x: 0 + offsetX, y: 0 + offsetY },
